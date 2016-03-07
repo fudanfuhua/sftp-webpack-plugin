@@ -4,6 +4,7 @@ var client = require('scp2');
 var waterfall = require('async-waterfall');
 var fileUtils = require('./file');
 var fs = require('fs');
+var colors = require('colors')
 
 exports.sftp = function(port, host, username, password, from, to) {
 	client.defaults({
@@ -27,7 +28,7 @@ exports.sftp = function(port, host, username, password, from, to) {
 	} else {
 		queue.push(
 			function(callback) {
-				client.upload(filename, to, function(err) {
+				client.upload(from, to, function(err) {
 					callback()
 				})
 			}
@@ -40,8 +41,11 @@ exports.sftp = function(port, host, username, password, from, to) {
 		}
 	)
 	waterfall(queue, function(err, result) {
-		console.info(err)
-		console.info(result)
+		if (err) {
+			console.info(err)
+		} else {
+			console.info("Files ( ".yellow+from + " ) uploaded".yellow)
+		}
 	})
 
 }
