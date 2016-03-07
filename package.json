@@ -1,0 +1,25 @@
+{
+  "name": "sftp-webpack-plugin",
+  "version": "0.1.0",
+  "main": "index.js",
+  "description": "it can allow the content of a folder upload to a remote server",
+  "author": "hades",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:iAmHades/sftp-webpack-plugin.git"
+  },
+  "keywords": [
+    "ssh",
+    "sftp",
+    "webpack",
+    "plugin",
+    "deplay",
+    "aliyun"
+  ],
+  "scripts": {},
+  "dependencies": {
+    "scp2": "0.2.2",
+    "colors": "1.1.2"
+  }
+}
