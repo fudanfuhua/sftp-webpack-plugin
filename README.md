@@ -40,5 +40,5 @@ The plugin allowed values are as follows:
 - `host`: 服务器地址。
 - `username`: 服务器登陆用户名。
 - `password`: 服务器登陆密码。
-- `from`: 你需要上传的文件路径或者文件。
+- `from`: 你需要上传的文件路径或者文件，其中对于文件，可以是文件路径的数组。
 - `to`: 服务器上的目标路径。

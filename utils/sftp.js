@@ -14,25 +14,12 @@ exports.sftp = function(port, host, username, password, from, to) {
 		password: password
 	});
 	var queue = []
-	var stats = fs.statSync(from)
-	if (stats.isDirectory()) {
-		fileUtils.eachFileSync(from, function(filename, stats) {
-			queue.push(
-				function(callback) {
-					client.upload(filename, to, function(err) {
-						callback()
-					})
-				}
-			)
-		});
+	if (from && Array.isArray(from)) {
+		from.forEach(function(f) {
+			putQueue(f, to, queue, client);
+		})
 	} else {
-		queue.push(
-			function(callback) {
-				client.upload(from, to, function(err) {
-					callback()
-				})
-			}
-		)
+		putQueue(from, to, queue, client);
 	}
 	queue.push(
 		function(callback) {
@@ -44,8 +31,38 @@ exports.sftp = function(port, host, username, password, from, to) {
 		if (err) {
 			console.info(err)
 		} else {
-			console.info("Files ( ".yellow+from + " ) uploaded".yellow)
+			if (from && Array.isArray(from)) {
+				from.forEach(function(f) {
+					console.info("Files ( ".yellow + f + " ) uploaded".yellow)
+				})
+			} else {
+				console.info("Files ( ".yellow + from + " ) uploaded".yellow)
+			}
 		}
 	})
+
+
+	function putQueue(from, to, queue, client) {
+		var stats = fs.statSync(from)
+		if (stats.isDirectory()) {
+			fileUtils.eachFileSync(from, function(filename, stats) {
+				queue.push(
+					function(callback) {
+						client.upload(filename, to, function(err) {
+							callback()
+						})
+					}
+				)
+			});
+		} else {
+			queue.push(
+				function(callback) {
+					client.upload(from, to, function(err) {
+						callback()
+					})
+				}
+			)
+		}
+	}
 
 }

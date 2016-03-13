@@ -1,6 +1,6 @@
 {
   "name": "sftp-webpack-plugin",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "main": "index.js",
   "description": "it can allow the content of a folder upload to a remote server",
   "author": "hades",
